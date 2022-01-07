@@ -1,0 +1,38 @@
+package com.example.focusinstandard.ui.viewmodel
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.focusinstandard.room.ReposDatabase
+import com.example.focusinstandard.room.entity.FavRepos
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+class FavReposViewModel(private val dbInstance: ReposDatabase): ViewModel() {
+
+    private val favRepos = MutableLiveData<List<FavRepos>>()
+
+    fun getFavRepos() : LiveData<List<FavRepos>> = favRepos
+
+    fun fetchFavReposFromFB(){
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            favRepos.postValue(dbInstance.favDao().getFavRepos())
+
+        }
+
+    }
+
+    fun removeRepoFromDB(favRepos: FavRepos){
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            dbInstance.favDao().removeFromFavRepos(favRepos)
+            fetchFavReposFromFB()
+        }
+
+    }
+
+}
