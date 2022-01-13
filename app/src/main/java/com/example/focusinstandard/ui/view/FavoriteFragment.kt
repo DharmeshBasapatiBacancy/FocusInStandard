@@ -16,6 +16,7 @@ import com.example.focusinstandard.api.service.ApiService
 import com.example.focusinstandard.databinding.FragmentFavoriteBinding
 import com.example.focusinstandard.repository.MainRepository
 import com.example.focusinstandard.room.DatabaseBuilder
+import com.example.focusinstandard.room.DatabaseHelperImpl
 import com.example.focusinstandard.room.entity.FavRepos
 import com.example.focusinstandard.ui.adapter.FavReposAdapter
 import com.example.focusinstandard.ui.viewmodel.FavReposViewModel
@@ -64,7 +65,7 @@ class FavoriteFragment : Fragment() {
 
         favReposViewModel = ViewModelProvider(
             this, ViewModelFactory(
-                MainRepository(ApiService.create()), DatabaseBuilder.getDBInstance(requireContext())
+                MainRepository(ApiService.create()), DatabaseHelperImpl(DatabaseBuilder.getDBInstance(requireContext()))
             )
         )[FavReposViewModel::class.java]
 

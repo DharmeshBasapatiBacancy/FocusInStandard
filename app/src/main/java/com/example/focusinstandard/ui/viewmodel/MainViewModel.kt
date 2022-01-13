@@ -9,6 +9,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.focusinstandard.api.models.git.RepoResponseItem
 import com.example.focusinstandard.repository.MainRepository
+import com.example.focusinstandard.room.DatabaseHelper
 import com.example.focusinstandard.room.ReposDatabase
 import com.example.focusinstandard.room.entity.FavRepos
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val mainRepository: MainRepository,
-    private val dbInstance: ReposDatabase
+    private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
     private val TAG = "MainViewModel"
@@ -34,8 +35,8 @@ class MainViewModel(
     fun insertRepoToDB(selectedRepo: RepoResponseItem) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            if (!dbInstance.favDao().checkIfRepoExists(selectedRepo.id)) {
-                dbInstance.favDao().insertNewRepo(
+            if (!dbHelper.checkIfRepoExists(selectedRepo.id)) {
+                dbHelper.insertNewRepo(
                     FavRepos(
                         repoId = selectedRepo.id, fullName = selectedRepo.full_name,
                         forksCount = selectedRepo.forks, repoLogo = selectedRepo.owner.avatar_url,

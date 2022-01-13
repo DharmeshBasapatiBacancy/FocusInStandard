@@ -17,6 +17,7 @@ import com.example.focusinstandard.api.service.ApiService
 import com.example.focusinstandard.databinding.FragmentHomeBinding
 import com.example.focusinstandard.repository.MainRepository
 import com.example.focusinstandard.room.DatabaseBuilder
+import com.example.focusinstandard.room.DatabaseHelperImpl
 import com.example.focusinstandard.ui.adapter.ReposAdapter
 import com.example.focusinstandard.ui.adapter.ReposLoadStateAdapter
 import com.example.focusinstandard.ui.viewmodel.MainViewModel
@@ -70,13 +71,14 @@ class HomeFragment : Fragment() {
 
     private fun insertSelectedRepoToDB(it: RepoResponseItem) {
         mainViewModel.insertRepoToDB(it)
+        Toast.makeText(requireContext(),"Added to Favorites",Toast.LENGTH_SHORT).show()
     }
 
     private fun setupViewModel() {
 
         mainViewModel = ViewModelProvider(
             this, ViewModelFactory(
-                MainRepository(ApiService.create()), DatabaseBuilder.getDBInstance(requireContext())
+                MainRepository(ApiService.create()), DatabaseHelperImpl(DatabaseBuilder.getDBInstance(requireContext()))
             )
         )[MainViewModel::class.java]
 

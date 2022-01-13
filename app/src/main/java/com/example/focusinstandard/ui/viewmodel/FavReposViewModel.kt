@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.focusinstandard.room.DatabaseHelper
 import com.example.focusinstandard.room.ReposDatabase
 import com.example.focusinstandard.room.entity.FavRepos
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FavReposViewModel(private val dbInstance: ReposDatabase): ViewModel() {
+class FavReposViewModel(private val dbHelper: DatabaseHelper): ViewModel() {
 
     private val favRepos = MutableLiveData<List<FavRepos>>()
 
@@ -19,7 +20,7 @@ class FavReposViewModel(private val dbInstance: ReposDatabase): ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            favRepos.postValue(dbInstance.favDao().getFavRepos())
+            favRepos.postValue(dbHelper.getFavRepos())
 
         }
 
@@ -29,7 +30,7 @@ class FavReposViewModel(private val dbInstance: ReposDatabase): ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            dbInstance.favDao().removeFromFavRepos(favRepos)
+            dbHelper.removeFromFavRepos(favRepos)
             fetchFavReposFromFB()
         }
 
