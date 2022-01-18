@@ -15,4 +15,9 @@
         android:name="com.example.focusinstandard.ui.view.FavoriteFragment"
         android:label="Favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/musicalFragment"
+        android:name="com.example.focusinstandard.ui.view.MusicalFragment"
+        android:label="Music"
+        tools:layout="@layout/fragment_musical" />
 </navigation>

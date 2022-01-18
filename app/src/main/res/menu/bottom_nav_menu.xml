@@ -9,5 +9,9 @@
         android:id="@+id/favoriteFragment"
         android:icon="@drawable/ic_baseline_favorite_24"
         android:title="Favorites" />
+    <item
+        android:id="@+id/musicalFragment"
+        android:icon="@drawable/ic_baseline_queue_music_24"
+        android:title="Music" />
 
 </menu>
